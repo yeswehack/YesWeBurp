@@ -2,9 +2,9 @@
 
 ## Description
 
-My YesWeHack is an extension for BurpSuite allowing you to access all your YesWeHack bug bounty programs directly inside Burp.
+YesWeBurp is an extension for BurpSuite allowing you to access all your YesWeHack bug bounty programs directly inside Burp.
 
-MyYesWeHack also help you to configure Burp according to the program rules
+YesWeBurp also help you to instantly configure Burp according to the program rules.
 
 ![](https://i.imgur.com/xkRj3wQ.png)
 
@@ -17,7 +17,7 @@ MyYesWeHack also help you to configure Burp according to the program rules
 - In Python Environment, set the location of the standalone jar to the previouly downloaded one
 
  
-### My YesWeHack
+### YesWeBurp
 - `git clone https://github.com/yeswehack/YesWeBurp.git' <installation_folder>`
 - Open Burp on Extender/ Extensions
 - Click `Add`
