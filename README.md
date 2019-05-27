@@ -33,11 +33,11 @@ The configuration options are available in the tab YesWeHack / Options
 
 | option | description | default |
 |--------|-------------|---------|
-| API URL | Base url for all the api calls | https://api.yeswehack.com  |
-| Authentication | Choose between Anonymous or authenticated connection | Anonymous |
-| Email | Email used for connecting to your YesWeHack account | - |
-| Password | Password used for connecting to your YesWeHack account | - |
-| Remember password | Choose to keep a plaintext copy of your password inside Burp | - |
+| API URL | Base url for all the api calls. | https://api.yeswehack.com  |
+| Authentication | Choose between Anonymous or authenticated connection.<br>Authenticated mode allows you to access all you private programs. | Anonymous |
+| Email | Email used for connecting to your YesWeHack account. | - |
+| Password | Password used for connecting to your YesWeHack account. | - |
+| Remember password | Choose to keep a plaintext copy of your password inside. Burp | - |
 
 
 ## Changelog
