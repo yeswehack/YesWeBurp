@@ -27,7 +27,7 @@ class ApiData(object):
                 k[2:]: v for k, v in cls.__dict__.items() if k.startswith("t_")
             }
             for key, constructor in constructors.items():
-                setattr(self, key, constructor(data[key]))
+                setattr(self, key, constructor(data.get(key, None)))
 
             for base in cls.__bases__:
                 load_class(base)
