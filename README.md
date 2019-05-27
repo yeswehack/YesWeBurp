@@ -2,7 +2,7 @@
 
 ## Description
 
-YesWeBurp is an extension for BurpSuite allowing you to access all your YesWeHack bug bounty programs directly inside Burp.
+YesWeBurp is an extension for BurpSuite allowing you to access all your https://yeswehack.com/ bug bounty programs directly inside Burp.
 
 YesWeBurp also help you to instantly configure Burp according to the program rules.
 
@@ -18,7 +18,7 @@ YesWeBurp also help you to instantly configure Burp according to the program rul
 
  
 ### YesWeBurp
-- `git clone https://github.com/yeswehack/YesWeBurp.git' <installation_folder>`
+- `git clone 'https://github.com/yeswehack/YesWeBurp.git' <installation_folder>`
 - Open Burp on Extender/ Extensions
 - Click `Add`
 - Set Extension type as Python
