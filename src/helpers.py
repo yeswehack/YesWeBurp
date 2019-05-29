@@ -29,17 +29,17 @@ def noop(*args, **kwargs):
     return args, kwargs
 
 
-def async_call(func, callback=None, callback_error=None):
+def async_call(func, callback=lambda x: x, callback_error=None):
     def wrapper():
         try:
             result = func()
         except Exception as e:
-            if not callback_error:
+            if callback_error:
+                callback_error(e)
+            else:
                 raise
-            callback_error(e)
         else:
-            if callback:
-                callback(result)
+            callback(result)
 
     return JThread(wrapper).start()
 

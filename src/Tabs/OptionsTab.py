@@ -88,9 +88,21 @@ class APIBox(JPanel):
         self.add(JLabel("Remember password :"), gridx=0)
         self.add(check_remember, gridx=1)
 
+        check_autoconnect = JCheckBox()
+        check_autoconnect.setSelected(settings.load_bool("autoconnect", True))
+        self.add(JLabel("Auto reconnect :"), gridx=0)
+        self.add(check_autoconnect, gridx=1)
+
+        btn_group = JPanel()
+
+        btn_save = JButton("Save settings")
+        btn_save.addActionListener(CallbackActionListener(self.save_settings))
         btn_connect = JButton("Connect")
-        btn_connect.addActionListener(CallbackActionListener(self.submit))
-        self.add(btn_connect, gridx=1, anchor=EAST)
+        btn_connect.addActionListener(CallbackActionListener(self.connect))
+
+        btn_group.add(btn_save)
+        btn_group.add(btn_connect)
+        self.add(btn_group, gridx=1, anchor=EAST)
 
         self.inputs = {
             "apiurl": txt_url,
@@ -98,13 +110,14 @@ class APIBox(JPanel):
             "email": txt_mail,
             "password": txt_pass,
             "remember": check_remember,
+            "autoconnect": check_autoconnect,
             "connect": btn_connect,
         }
 
         self.setMaximumSize(self.getPreferredSize())
 
+        self.set_status_error("Disconnected")
         self.auth_method_changed()
-        async_call(self.update_status)
 
     def auth_method_changed(self, *args):
         method = self.inputs["auth_method"].getSelectedItem()
@@ -117,7 +130,7 @@ class APIBox(JPanel):
             self.inputs["password"].setEnabled(True)
             self.inputs["remember"].setEnabled(True)
 
-    def save_settings(self):
+    def save_settings(self, event):
         settings = context.settings
         settings.save("apiurl", self.inputs["apiurl"].getText())
         settings.save("auth_method", self.inputs["auth_method"].getSelectedItem())
@@ -129,8 +142,9 @@ class APIBox(JPanel):
             self.inputs["password"].setText("")
 
         settings.save("remember", self.inputs["remember"].isSelected())
+        settings.save("autoconnect", self.inputs["autoconnect"].isSelected())
 
-    def submit(self, event):
+    def connect(self, event):
         api_url = self.inputs["apiurl"].getText()
         auth_method = self.inputs["auth_method"].getSelectedItem()
 
@@ -142,23 +156,22 @@ class APIBox(JPanel):
                 self.inputs["email"].getText(), self.inputs["password"].getText()
             )
             context.api.change_auth(auth)
-        self.save_settings()
+        context.addon.connect()
 
-        self.update_status()
-        context.tabs["Programs"].load_program_list()
+    def set_status_success(self, txt):
+        self.status.set(txt, Color(0x006400), Color.WHITE)
 
-    def update_status(self):
-        self.status.set("Updating...", bg=Color(0xCCCCCC))
+    def set_status_error(self, txt):
+        self.status.set(txt, Color(0xB80000), Color.WHITE)
 
-        def set_username(hunter):
-            txt = "Connected as {}".format(hunter.username)
-            self.status.set(txt, Color(0x006400), Color.WHITE)
+    def show_error(self, error):
+        txt = "ERROR: {}".format(error)
+        self.set_status_error(txt)
 
-        def set_error(error):
-            txt = "Disconnected  - {}".format(error.message)
-            self.status.set(txt, Color(0xB80000), Color.WHITE)
-
-        async_call(context.api.get_user, set_username, set_error)
+    def show_username(self):
+        hunter = context.api.get_user()
+        txt = "Connected as {}".format(hunter.username)
+        self.set_status_success(txt)
 
     def add(self, el, **constraints):
         default = {"insets": padding(5), "anchor": WEST}
@@ -170,5 +183,8 @@ class APIBox(JPanel):
 class OptionsTab(JScrollPane):
     def __init__(self):
         panel = ColumnPanel()
-        panel.add(APIBox())
+        apibox = APIBox()
+        panel.add(apibox)
         JScrollPane.__init__(self, panel)
+        context.addon.register_on_connect(apibox.show_username)
+        context.addon.register_on_error(apibox.show_error)

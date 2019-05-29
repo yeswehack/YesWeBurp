@@ -2,7 +2,7 @@ from burp import IBurpExtender, ITab
 from javax.swing import JTabbedPane
 from Tabs import OptionsTab, ProgramsTab
 from api import Auth, AuthMethod, YWHApi, APIException
-from helpers import BurpHTTP
+from helpers import BurpHTTP, async_call
 import context
 
 
@@ -13,7 +13,11 @@ VERSION = "1.0.1"
 
 
 class BurpExtender(IBurpExtender, ITab):
+    connect_callback = list()
+    error_callback = list()
+
     def registerExtenderCallbacks(self, callbacks):
+        context.addon = self
         context.version = VERSION
         context.callbacks = callbacks
         context.callbacks.setExtensionName(EXTENSION_NAME)
@@ -43,6 +47,25 @@ class BurpExtender(IBurpExtender, ITab):
 
         self.getUiComponent = lambda: tab
         context.callbacks.addSuiteTab(self)
+        if context.settings.load_bool("autoconnect", False):
+            self.connect()
 
     def getTabCaption(self):
         return TAB_NAME
+
+    def register_on_connect(self, callback):
+        self.connect_callback.append(callback)
+
+    def register_on_error(self, callback):
+        self.error_callback.append(callback)
+
+    def connect(self):
+        def success(*args):
+            for callback in self.connect_callback:
+                callback()
+
+        def error(error):
+            for callback in self.error_callback:
+                callback(error)
+
+        async_call(context.api.authenticate, success, error)

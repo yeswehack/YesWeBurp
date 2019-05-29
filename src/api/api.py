@@ -4,6 +4,7 @@
 # by @BitK_
 #
 from .models import ProgramDetails, Program, Hunter, Pages
+from javax.swing import JOptionPane
 
 
 class APIException(Exception):
@@ -38,11 +39,32 @@ class Auth:
 
     @classmethod
     def email_pass(cls, email, password):
+        def ask_topt(server, fetcher, token):
+            code = JOptionPane.showInputDialog(
+                None,
+                "TOTP Code:",
+                "Please enter your TOTP code",
+                JOptionPane.PLAIN_MESSAGE,
+                None,
+                None,
+                "",
+            )
+            data = {"token": token, "code": code.strip()}
+
+            url = "{}/account/totp".format(server)
+            response = fetcher.post(url, data).json()
+            if "code" in response:
+                raise APIException(response["code"], response["message"])
+
+            return response["token"]
+
         def get_token(server, fetcher):
             data = {"email": email, "password": password}
             url = "{}/login".format(server)
             response = fetcher.post(url, data).json()
-            if "token" not in response:
+            if "totp_token" in response:
+                return ask_topt(server, fetcher, response["totp_token"])
+            if "code" in response:
                 raise APIException(response["code"], response["message"])
 
             return response["token"]
@@ -67,17 +89,12 @@ class YWHApi(object):
                 )
         else:
             self.fetcher = fetcher
-        self.token = self.authenticate()
 
     @property
     def default_headers(self):
         default_headers = {"User-Agent": self.useragent}
-
-        if self.token is None:
-            self.token = self.authenticate()
         if self.token is not None:
             default_headers["Authorization"] = "Bearer {}".format(self.token)
-
         return default_headers
 
     def handle_error(self, response):
@@ -108,13 +125,14 @@ class YWHApi(object):
         response = self.fetcher.get(url, json=json, headers=headers_with_default)
         if response.status_code != 200:
             if response.status_code == 401 and retry:
-                self.token = self.authenticate()
+                self.token = None
                 return self.post(path, json, headers, False)
             self.handle_error(response)
         return response
 
     def authenticate(self):
-        return self.auth(self.server, self.fetcher)
+        self.token = self.auth(self.server, self.fetcher)
+        return self.token
 
     def get_programs(self):
         constructor = Pages(Program)

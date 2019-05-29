@@ -317,18 +317,14 @@ class ProgramsTab(JPanel):
 
         self.splitPane = SplitPanel(scrollPane, JPanel())
         self.add(self.splitPane)
-
-        self.load_program_list()
+        context.addon.register_on_connect(self.load_program_list)
+        context.addon.register_on_error(self.display_error)
 
     def load_program_list(self):
-        # fetch and display program async
-        async_call(
-            context.api.get_programs, self.display_program_list, self.display_error
-        )
+        self.display_program_list(context.api.get_programs())
 
     def display_program_list(self, programs):
         self.programs = programs
-        # titles = tuple(program.title for program in self.programs)
 
         model = DefaultListModel()
         for program in programs:
@@ -347,7 +343,7 @@ class ProgramsTab(JPanel):
 
     def display_error(self, error):
         self.JprogramList.setListData(tuple())
-        self.splitPane.setRightComponent(JLabel("Error : {}".format(error)))
+        self.splitPane.setRightComponent(JLabel("You are disconnected"))
 
     def load_program_details(self, pgm_details):
         pane = ProgramPane(pgm_details)

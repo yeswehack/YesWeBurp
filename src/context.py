@@ -39,5 +39,6 @@ class Settings(object):
 
 callbacks = None
 api = None
+addon = None
 settings = Settings("YWH")
 tabs = OrderedDict()
