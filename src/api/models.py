@@ -55,7 +55,6 @@ class Program(ApiData):
     t_reports_count = int
     t_title = str
     t_slug = str
-    t_banner = Picture
     t_public = bool
     t_hall_of_fame = bool
     t_bounty = bool
