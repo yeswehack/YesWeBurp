@@ -42,4 +42,5 @@ The configuration options are available in the tab YesWeHack / Options
 
 ## Changelog
 
+- v1.0.1 - Basic support for TOTP
 - v1.0.0 - Initial release
