@@ -9,7 +9,7 @@ import context
 DEFAULT_URI = "https://api.yeswehack.com"
 EXTENSION_NAME = "YesWeBurp"
 TAB_NAME = "YesWeHack"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 
 
 class BurpExtender(IBurpExtender, ITab):
