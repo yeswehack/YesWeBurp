@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0" type="repository">
+    <properties maven-id="org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/kotlinx-serialization-json-1.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlinx-serialization-json-jvm-1.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-1.4.30.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/annotations-13.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-common-1.4.30.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlinx-serialization-core-jvm-1.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

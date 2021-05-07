@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="com.fasterxml.jackson.module:jackson-module-kotlin:2.12.2" type="repository">
+    <properties maven-id="com.fasterxml.jackson.module:jackson-module-kotlin:2.12.2" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jackson-module-kotlin-2.12.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-databind-2.12.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-core-2.12.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-annotations-2.12.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-reflect-1.4.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-1.4.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-common-1.4.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/annotations-13.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

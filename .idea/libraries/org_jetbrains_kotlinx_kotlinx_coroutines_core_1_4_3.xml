@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3" type="repository">
+    <properties maven-id="org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/kotlinx-coroutines-core-1.4.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlinx-coroutines-core-jvm-1.4.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-1.4.30.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/annotations-13.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-common-1.4.30.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
