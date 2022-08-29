@@ -12,12 +12,15 @@ import yesweburp.ui.matchSizes
 import java.awt.*
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import java.awt.font.TextAttribute
 import java.lang.StrictMath.min
 import java.util.*
 import javax.swing.Box
+import javax.swing.JEditorPane
 import javax.swing.JLabel
 import javax.swing.JTable
 import javax.swing.border.EmptyBorder
+import kotlin.reflect.jvm.internal.impl.resolve.calls.inference.CapturedType
 
 
 class ProgramInfoPanel(program: Program) : BorderPanel() {
@@ -35,18 +38,9 @@ class ProgramInfoPanel(program: Program) : BorderPanel() {
                     override fun mouseClicked(e: MouseEvent?) {
                         openInBrowser("https://yeswehack.com/programs/${program.slug}")
                     }
-
-                    override fun mouseEntered(e: MouseEvent?) {
-                        super.mouseEntered(e)
-                        text = "<html><u>${program.title}</u></html>"
-                    }
-
-                    override fun mouseExited(e: MouseEvent?) {
-                        super.mouseExited(e)
-                        text = program.title
-                    }
                 })
             }
+
 
             val privateLabel = Label {
                 if (program.public) {
@@ -66,9 +60,9 @@ class ProgramInfoPanel(program: Program) : BorderPanel() {
 
             matchSizes(privateLabel, configButton)
             add(privateLabel, gridY = 0)
-            add(Box.createHorizontalGlue(), gridY = 0, weightX = 1.0, fill = GridBagConstraints.HORIZONTAL )
+            add(Box.createHorizontalGlue(), gridY = 0, weightX = 1.0, fill = GridBagConstraints.HORIZONTAL)
             add(title, gridY = 0)
-            add(Box.createHorizontalGlue(), gridY = 0, weightX = 1.0, fill = GridBagConstraints.HORIZONTAL )
+            add(Box.createHorizontalGlue(), gridY = 0, weightX = 1.0, fill = GridBagConstraints.HORIZONTAL)
             add(configButton, gridY = 0)
         }
     }
@@ -76,11 +70,13 @@ class ProgramInfoPanel(program: Program) : BorderPanel() {
     private class HTMLBox(rules: String) : BorderPanel() {
         init {
             border = EmptyBorder(5, 0, 0, 0)
-            val css = "html{width:600px;padding:5px;font-family: InriaSans,Arial,sans-serif;} p{text-align: justify} img{max-width:100%}"
-            val htmlRules = Label("<html><head><style>${css}</style></head><body>${rules}</body></html>") {
-                verticalAlignment = JLabel.TOP
-                isOpaque = true
-            }
+            val css =
+                "html{width:600px;padding:5px;font-family: InriaSans,Arial,sans-serif;} p{text-align: justify} img{max-width:100%}"
+            val htmlRules =
+                JEditorPane("text/html", "<html><head><style>${css}</style></head><body>${rules}</body></html>")
+            htmlRules.isEditable = false
+            htmlRules.isOpaque = true
+            htmlRules.alignmentY = JEditorPane.TOP_ALIGNMENT
             center = ScrollPane(htmlRules) {
                 maximumSize = Dimension(Int.MAX_VALUE, Int.MAX_VALUE)
                 verticalScrollBar.unitIncrement = 16
