@@ -6,7 +6,7 @@ data class Pagination(val nb_pages: Int, val page: Int, val result_per_page: Int
 data class Page<T>(val items: List<T>, val pagination: Pagination)
 
 data class BusinessUnit(val currency: String)
-data class Scope(val scope: String, val scope_type: String, val security_requirement: String)
+data class Scope(val scope: String, val scope_type: String, val asset_value: String)
 data class ShortProgram(val title: String, val slug: String)
 data class RewardGrid(
     val bounty_low: Int? = null,

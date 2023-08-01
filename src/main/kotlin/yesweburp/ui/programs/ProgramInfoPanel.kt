@@ -104,7 +104,7 @@ class ProgramInfoPanel(program: Program) : BorderPanel() {
             addTitleBorder("In scope")
             val columns = arrayOf("Scope", "Type", "Low", "Medium", "High", "Critical")
             val data = program.scopes.map { scope ->
-                val rewardGrid = when (scope.security_requirement) {
+                val rewardGrid = when (scope.asset_value) {
                     "low" -> program.reward_grid_low
                     "medium" -> program.reward_grid_medium
                     "high" -> program.reward_grid_high
