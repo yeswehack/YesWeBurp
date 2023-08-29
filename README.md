@@ -50,6 +50,7 @@ The configuration options are available in the tab YesWeHack / Options
 
 
 ## Changelog
+- v2.0.2 - Change in yeswehack api
 - v2.0.1 - Fixed html rendering
 - v2.0.0 
     - Total rewrite in Kotlin
