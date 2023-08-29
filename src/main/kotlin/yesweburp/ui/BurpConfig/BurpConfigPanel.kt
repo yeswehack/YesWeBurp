@@ -7,14 +7,12 @@ import yesweburp.callbacks
 import yesweburp.config.BurpConfig
 import yesweburp.config.BurpReplaceRule
 import yesweburp.config.BurpScopeRule
-import yesweburp.stdout
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.EventQueue
 import java.awt.Font
 import javax.swing.*
 import javax.swing.table.DefaultTableModel
-
 
 
 fun hostToRegex(s: String): String {

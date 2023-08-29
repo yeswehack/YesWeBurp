@@ -33,7 +33,7 @@ object API {
                 val err: APIError = jsonMapper.readValue(responseBody)
                 throw APIException(err.message)
             }
-            throw  APIException("API Error ${responseInfo.statusCode}")
+            throw APIException("API Error ${responseInfo.statusCode}")
         }
         return responseBody
     }
@@ -51,6 +51,7 @@ object API {
         val response = sendRequest(request)
         return jsonMapper.readValue(response)
     }
+
     private inline fun <reified TForm, reified TResp> post(path: String, form: TForm): TResp {
         val body = jsonMapper.writeValueAsBytes(form)
         val headers = mutableListOf(
@@ -90,15 +91,13 @@ object API {
     }
 
     fun fetchPrograms() {
-        GlobalScope.launch {
-            val data = mutableListOf<Program>()
-            var page = 1
-            do {
-                val response: Page<ShortProgram> = get("/programs?page=$page")
-                response.items.stream().parallel().forEach { data.add(get("/programs/${it.slug}")) }
-            } while (page++ < response.pagination.nb_pages)
-            val programs = data.sortedBy(Program::title)
-            programsLoaded.fire(programs)
-        }
+        val data = mutableListOf<Program>()
+        var page = 1
+        do {
+            val response: Page<ShortProgram> = get("/programs?page=$page")
+            response.items.stream().parallel().forEach { data.add(get("/programs/${it.slug}")) }
+        } while (page++ < response.pagination.nb_pages)
+        val programs = data.sortedBy(Program::title)
+        programsLoaded.fire(programs)
     }
 }

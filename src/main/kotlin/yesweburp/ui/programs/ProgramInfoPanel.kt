@@ -12,7 +12,6 @@ import yesweburp.ui.matchSizes
 import java.awt.*
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
-import java.awt.font.TextAttribute
 import java.lang.StrictMath.min
 import java.util.*
 import javax.swing.Box
@@ -20,7 +19,6 @@ import javax.swing.JEditorPane
 import javax.swing.JLabel
 import javax.swing.JTable
 import javax.swing.border.EmptyBorder
-import kotlin.reflect.jvm.internal.impl.resolve.calls.inference.CapturedType
 
 
 class ProgramInfoPanel(program: Program) : BorderPanel() {
@@ -104,10 +102,10 @@ class ProgramInfoPanel(program: Program) : BorderPanel() {
             addTitleBorder("In scope")
             val columns = arrayOf("Scope", "Type", "Low", "Medium", "High", "Critical")
             val data = program.scopes.map { scope ->
-                val rewardGrid = when (scope.security_requirement) {
-                    "low" -> program.reward_grid_low
-                    "medium" -> program.reward_grid_medium
-                    "high" -> program.reward_grid_high
+                val rewardGrid = when (scope.asset_value) {
+                    "LOW" -> program.reward_grid_low
+                    "MEDIUM" -> program.reward_grid_medium
+                    "HIGH" -> program.reward_grid_high
                     else -> program.reward_grid_default
                 }
 
