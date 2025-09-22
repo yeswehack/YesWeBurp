@@ -94,7 +94,7 @@ object API {
         val data = mutableListOf<Program>()
         var page = 1
         do {
-            val response: Page<ShortProgram> = get("/programs?page=$page")
+            val response: Page<ShortProgram> = get("/programs?filter[type][]=bug-bounty&page=$page")
             response.items.stream().parallel().forEach { data.add(get("/programs/${it.slug}")) }
         } while (page++ < response.pagination.nb_pages)
         val programs = data.sortedBy(Program::title)
