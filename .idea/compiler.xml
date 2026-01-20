@@ -9,8 +9,5 @@
         <module name="YesWeBurp" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="YesWeBurp" target="15" />
-    </bytecodeTargetLevel>
   </component>
 </project>
