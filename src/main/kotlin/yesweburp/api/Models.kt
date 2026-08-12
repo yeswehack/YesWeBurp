@@ -2,11 +2,11 @@ package yesweburp.api
 
 class APIException(msg: String?) : Exception(msg)
 
-data class Pagination(val nb_pages: Int, val page: Int, val result_per_page: Int)
+data class Pagination(val nb_pages: Int = 1, val page: Int = 1, val result_per_page: Int = 0)
 data class Page<T>(val items: List<T>, val pagination: Pagination)
 
-data class BusinessUnit(val currency: String)
-data class Scope(val scope: String, val scope_type: String, val asset_value: String)
+data class BusinessUnit(val currency: String = "")
+data class Scope(val scope: String = "", val scope_type: String = "", val asset_value: String = "")
 data class ShortProgram(val title: String, val slug: String)
 data class RewardGrid(
     val bounty_low: Int? = null,
@@ -18,14 +18,14 @@ data class RewardGrid(
 data class Program(
     val title: String,
     val slug: String,
-    val rules_html: String,
-    val scopes: List<Scope>,
-    val out_of_scope: List<String>,
-    val public: Boolean,
-    val qualifying_vulnerability: List<String>,
-    val non_qualifying_vulnerability: List<String>,
-    val business_unit: BusinessUnit,
-    val vpn_active: Boolean,
+    val rules_html: String = "",
+    val scopes: List<Scope> = emptyList(),
+    val out_of_scope: List<String> = emptyList(),
+    val public: Boolean = false,
+    val qualifying_vulnerability: List<String> = emptyList(),
+    val non_qualifying_vulnerability: List<String> = emptyList(),
+    val business_unit: BusinessUnit = BusinessUnit(),
+    val vpn_active: Boolean = false,
     val user_agent: String? = null,
     val reward_grid_default: RewardGrid? = null,
     val reward_grid_very_low: RewardGrid? = null,
